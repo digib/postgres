@@ -44,8 +44,12 @@ jobs:
             CREATE EXTENSION postgis_tiger_geocoder CASCADE;
             CREATE EXTENSION vector;
             CREATE EXTENSION pg_trgm;
+            CREATE EXTENSION hypopg;
+            CREATE EXTENSION pg_stat_statements;
             SELECT extname, extversion FROM pg_extension ORDER BY extname;
-            SELECT '[1,2,3]'::vector <=> '[1,2,4]'::vector AS cosine_distance, ST_AsText(ST_MakePoint(24.57, 59.34)) AS point;"
+            SELECT '[1,2,3]'::vector <=> '[1,2,4]'::vector AS cosine_distance, ST_AsText(ST_MakePoint(24.57, 59.34)) AS point;
+            SELECT indexname AS hypothetical_index FROM hypopg_create_index('CREATE INDEX ON pg_class (relname)');
+            SELECT count(*) > 0 AS statements_tracked FROM pg_stat_statements;"
       - uses: docker/metadata-action@v6
         id: meta
         with:
