@@ -27,7 +27,7 @@ A pull request runs the same build and check without publishing.
 
 ## Tags
 
-`18` is the latest build, `18-YYYYMMDD` one build, unchanged. Builds run on every push to `main` and every Monday. A new PostgreSQL major version is a new tag, never an update of `18`.
+`18` is the latest build, `18-YYYYMMDD` one build, unchanged. Builds run on every push to `main` and every Monday. The package install comes from the build cache until a version apt would install changes (the workflow passes a hash of them as `PACKAGE_VERSIONS`), so packages keep the `postgresql-18-` prefix the workflow looks for. A new PostgreSQL major version is a new tag, never an update of `18`.
 
 ## Workflow
 

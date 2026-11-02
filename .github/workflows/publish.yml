@@ -26,11 +26,22 @@ jobs:
       - uses: actions/checkout@v7
       - uses: docker/setup-qemu-action@v4
       - uses: docker/setup-buildx-action@v4
+      # The versions apt would install now, the packages' dependencies too: the cached install is
+      # used until one of them changes.
+      - name: Find the package versions
+        id: packages
+        run: |
+          packages=$(grep -oE 'postgresql-18-[a-z0-9-]+' Dockerfile | tr '\n' ' ')
+          docker run --rm postgres:18-trixie sh -c "apt-get update -qq && apt-get install -s --no-install-recommends $packages" \
+            | awk '/^Inst/ { print $2, $3 }' | sort > versions.txt
+          grep postgresql-18- versions.txt
+          echo "hash=$(sha256sum versions.txt | cut -c1-16)" >> "$GITHUB_OUTPUT"
       - name: Build for checking
         uses: docker/build-push-action@v7
         with:
           load: true
           tags: postgres:check
+          build-args: PACKAGE_VERSIONS=${{ steps.packages.outputs.hash }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Check the extensions
@@ -70,5 +81,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: PACKAGE_VERSIONS=${{ steps.packages.outputs.hash }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
