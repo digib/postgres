@@ -3,6 +3,10 @@
 # extension packages follow each release.
 FROM postgres:18-trixie
 
+# A hash of the versions apt would install, from the workflow: a new version is a new value, so the
+# install below runs again instead of coming from the build cache.
+ARG PACKAGE_VERSIONS
+
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     postgresql-18-postgis-3 \
