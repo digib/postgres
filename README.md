@@ -12,7 +12,7 @@ docker pull ghcr.io/digib/postgres:18
 - **[PostGIS 3](https://postgis.net/)**, with its topology extension (`postgresql-18-postgis-3`, `postgresql-18-postgis-3-scripts`)
 - **[pgvector](https://github.com/pgvector/pgvector)** (`postgresql-18-pgvector`)
 - **[hypopg](https://hypopg.readthedocs.io/)** (`postgresql-18-hypopg`): hypothetical indexes, to see what an index would do without building it
-- PostgreSQL's own extensions, such as `pg_trgm`, `fuzzystrmatch` and `pg_stat_statements` (statistics per query), which the image loads at startup (`shared_preload_libraries`). A project that sets its own `command` or `shared_preload_libraries` replaces that and adds `pg_stat_statements` to its own list.
+- PostgreSQL's own extensions, such as `pg_trgm`, `unaccent`, `ltree` and `pg_stat_statements` (statistics per query), which the image loads at startup (`shared_preload_libraries`). A project that sets its own `command` or `shared_preload_libraries` replaces that and adds `pg_stat_statements` to its own list.
 
 Extensions come from the PostgreSQL project's apt repository, which follows each release. A project creates the ones it uses, in a migration or an init script:
 
