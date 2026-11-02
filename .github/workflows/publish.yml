@@ -41,7 +41,6 @@ jobs:
           docker exec check psql -U postgres -v ON_ERROR_STOP=1 -c "
             CREATE EXTENSION postgis;
             CREATE EXTENSION postgis_topology;
-            CREATE EXTENSION postgis_tiger_geocoder CASCADE;
             CREATE EXTENSION vector;
             CREATE EXTENSION pg_trgm;
             CREATE EXTENSION hypopg;

@@ -9,7 +9,7 @@ docker pull ghcr.io/digib/postgres:18
 ## What's in it
 
 - **[PostgreSQL 18](https://hub.docker.com/_/postgres)**, from the official `postgres:18-trixie` image: Debian, for x86 and Arm
-- **[PostGIS 3](https://postgis.net/)**, with its topology and Tiger geocoder extensions (`postgresql-18-postgis-3`, `postgresql-18-postgis-3-scripts`)
+- **[PostGIS 3](https://postgis.net/)**, with its topology extension (`postgresql-18-postgis-3`, `postgresql-18-postgis-3-scripts`)
 - **[pgvector](https://github.com/pgvector/pgvector)** (`postgresql-18-pgvector`)
 - **[hypopg](https://hypopg.readthedocs.io/)** (`postgresql-18-hypopg`): hypothetical indexes, to see what an index would do without building it
 - PostgreSQL's own extensions, such as `pg_trgm`, `fuzzystrmatch` and `pg_stat_statements` (statistics per query), which the image loads at startup (`shared_preload_libraries`). A project that sets its own `command` or `shared_preload_libraries` replaces that and adds `pg_stat_statements` to its own list.
